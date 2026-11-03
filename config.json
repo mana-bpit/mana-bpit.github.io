@@ -18,7 +18,7 @@
   "font": "Prompt",
   "iconStyle": "brand",
   "socials": {
-    "line": "",
+    "line": "https://lin.ee/xhNORtn",
     "facebook": "https://www.facebook.com/profile.php?id=61595229913008",
     "tiktok": "https://www.tiktok.com/@manastore1?_r=1&_t=ZS-9AjSrmOMsoG",
     "instagram": "https://www.instagram.com/mana_store.1?obrf=MTRoNW5hY3FqNmUyMw%3D%3D&utm_source=qr"
@@ -89,7 +89,7 @@
     }
   ],
   "socialsVisible": {
-    "line": false,
+    "line": true,
     "facebook": true,
     "tiktok": true,
     "instagram": true
