@@ -70,7 +70,7 @@
         <label for="gh-token">Token (kept only in this browser, on this computer)</label>
         <input type="password" id="gh-token" autocomplete="off" spellcheck="false" placeholder="github_pat_...">
         <label for="gh-repo">Repository</label>
-        <input type="text" id="gh-repo" value="rujikorn-bpit/rujikorn-bpit.github.io">
+        <input type="text" id="gh-repo" value="mana-bpit/mana-bpit.github.io">
         <div class="actions" style="margin-top:12px">
           <button id="gh-connect">Save settings and test</button>
           <button id="gh-forget">Remove token from this browser</button>
@@ -171,11 +171,12 @@
     <div class="card">
       <h2>QR Code</h2>
       <label for="qr-url">Fixed URL</label>
-      <input type="url" id="qr-url" value="https://rujikorn-bpit.github.io/">
+      <input type="url" id="qr-url" data-path="qr.url" placeholder="https://your-name.github.io/">
       <div class="row">
-        <div><label>Dots</label><input type="color" id="qr-fg" value="#1a1a1a"></div>
-        <div><label>Background</label><input type="color" id="qr-bg" value="#ffffff"></div>
+        <div><label>Dots</label><input type="color" id="qr-fg" data-path="qr.fg"></div>
+        <div><label>Background</label><input type="color" id="qr-bg" data-path="qr.bg"></div>
       </div>
+      <p class="hint">The Fixed URL and the colours are saved with "Save to GitHub", so they stay the same next time.</p>
       <div id="qr"></div>
       <div class="actions">
         <button id="qr-png">Download PNG</button>
@@ -208,6 +209,8 @@ function fillForm() {
   config.iconStyle ||= 'design';
   config.socialsVisible = { line: true, facebook: true, tiktok: true, instagram: true, ...config.socialsVisible };
   config.logo = { size: 104, zoom: 100, x: 0, y: 0, border: config.primary || '#FF7F17', borderWidth: 3, ...config.logo };
+  config.qr = { fg: '#1a1a1a', bg: '#ffffff', ...config.qr };
+  config.qr.url ||= defaultSiteUrl();
   document.querySelectorAll('[data-path]').forEach(el => {
     const v = getPath(config, el.dataset.path);
     if (el.type === 'checkbox') el.checked = !!v;
@@ -217,6 +220,15 @@ function fillForm() {
   renderLinks();
   renderContacts();
   refresh();
+  drawQr();
+}
+
+// The Link Page's own address: where the Editor is open, or else from the repository name
+// ("owner/owner.github.io" -> "https://owner.github.io/").
+function defaultSiteUrl() {
+  if (/\.github\.io$/i.test(location.hostname)) return location.origin + '/';
+  const m = /^([^/]+)\/\1\.github\.io$/i.exec(gh.repo);
+  return m ? `https://${m[1].toLowerCase()}.github.io/` : '';
 }
 
 document.querySelectorAll('[data-path]').forEach(el => {
@@ -555,7 +567,11 @@ document.addEventListener('keydown', e => {
 });
 
 $('#gh-token').value = gh.token;
-if (store.get('gh-repo')) $('#gh-repo').value = store.get('gh-repo');
+// Repository: the saved setting, else the site this Editor is open on (owner.github.io)
+{
+  const site = /^([^.]+)\.github\.io$/i.exec(location.hostname);
+  $('#gh-repo').value = store.get('gh-repo') || (site ? `${site[1]}/${site[1]}.github.io` : $('#gh-repo').value);
+}
 
 $('#gh-connect').onclick = async () => {
   store.set('gh-token', $('#gh-token').value.trim());
