@@ -93,5 +93,10 @@
     "facebook": true,
     "tiktok": true,
     "instagram": true
+  },
+  "qr": {
+    "fg": "#1a1a1a",
+    "bg": "#ffffff",
+    "url": "https://mana-bpit.github.io/"
   }
 }
