@@ -66,6 +66,22 @@
       "visible": false
     },
     {
+      "label": "ช้อปที่ Thaimart",
+      "sub": "Thaimart shop",
+      "url": "https://thaimart.com/s/manastore-YqNTMI",
+      "icon": "bag",
+      "kind": "primary",
+      "visible": true
+    },
+    {
+      "label": "ช้อปที่ Nex Gen",
+      "sub": "Nex Gen Commerce shop",
+      "url": "https://nexgencommerce.one.th/linkShop/AQZXavoNlm-15788",
+      "icon": "bag",
+      "kind": "primary",
+      "visible": true
+    },
+    {
       "label": "ติดต่อเรา / โทร",
       "sub": "Contact us",
       "url": "#contacts",
