@@ -153,7 +153,7 @@
       <h2>Link buttons</h2>
       <div id="links"></div>
       <div class="actions"><button id="add-link">+ Add link</button></div>
-      <p class="hint">Type <code>#contacts</code> as the link to open the contact pop-up. Clear "Show" to hide a button. A button with no link shows, but nothing happens when people touch it.</p>
+      <p class="hint">Type <code>#contacts</code> as the link to open the contact pop-up. Clear "Show" to hide a button. Select "New" to show a thick border and a red "ใหม่!!" badge. A button with no link shows, but nothing happens when people touch it.</p>
     </div>
 
     <div class="card">
@@ -369,7 +369,17 @@ function renderLinks() {
     const cb = document.createElement('input');
     cb.type = 'checkbox'; cb.checked = link.visible !== false;
     show.append(cb, 'Show');
-    const item = listItem(config.links, i, link.label || '(new link)', renderLinks, show);
+    const isNew = document.createElement('label');
+    isNew.className = 'inline';
+    isNew.style.margin = 0;
+    const newCb = document.createElement('input');
+    newCb.type = 'checkbox'; newCb.checked = !!link.isNew;
+    newCb.onchange = () => { link.isNew = newCb.checked; refresh(); };
+    isNew.append(newCb, 'New');
+    const flags = document.createElement('div');
+    flags.style.cssText = 'display:flex;gap:12px';
+    flags.append(show, isNew);
+    const item = listItem(config.links, i, link.label || '(new link)', renderLinks, flags);
     item.classList.toggle('off', link.visible === false);
     cb.onchange = () => { link.visible = cb.checked; item.classList.toggle('off', !cb.checked); refresh(); };
 

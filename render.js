@@ -310,6 +310,12 @@ function renderPage(config, root) {
       chev.style.color = BRANDS[brand].solid;
     }
     a.append(chip, labels, chev);
+    if (l.isNew) {
+      // Thick border in the platform's colour, with a red badge on the top right
+      a.classList.add('is-new');
+      if (brand) a.style.setProperty('--new-color', BRANDS[brand].solid);
+      a.appendChild(el('span', 'lp-new-badge', 'ใหม่!!'));
+    }
     list.appendChild(a);
   }
   body.appendChild(list);

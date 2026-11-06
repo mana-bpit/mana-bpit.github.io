@@ -127,6 +127,26 @@ html, body { margin: 0; min-height: 100%; }
 .lp-link.no-link:active, .lp-link.no-link:hover { transform: none; background: #FFFFFF; border-color: #EADFD6; }
 .lp-social.no-link:active, .lp-promo-cta.no-link:active { transform: none; }
 
+/* New channel: thick border in the platform's colour (--new-color) and a red badge.
+   The padding is 1.5px less on each side, so the content stays where it was. */
+.lp-link.is-new {
+  position: relative;
+  border-width: 3px;
+  padding: 0 12.5px 0 10.5px;
+}
+.lp-link.is-new, .lp-link.is-new:hover, .lp-link.is-new:active { border-color: var(--new-color, var(--chip)); }
+.lp-new-badge {
+  position: absolute;
+  top: -11px; right: 12px;
+  padding: 1px 10px;
+  border-radius: 8px;
+  background: #E32223;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
 .lp-chip {
   width: 46px; height: 40px; flex: none;
   border-radius: 8px;
