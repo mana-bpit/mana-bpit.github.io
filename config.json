@@ -71,7 +71,8 @@
       "url": "https://thaimart.com/s/manastore-YqNTMI",
       "icon": "bag",
       "kind": "primary",
-      "visible": true
+      "visible": true,
+      "isNew": true
     },
     {
       "label": "ช้อปที่ Nex Gen",
@@ -79,7 +80,8 @@
       "url": "https://nexgencommerce.one.th/linkShop/AQZXavoNlm-15788",
       "icon": "bag",
       "kind": "primary",
-      "visible": true
+      "visible": true,
+      "isNew": true
     },
     {
       "label": "ติดต่อเรา / โทร",
