@@ -34,6 +34,24 @@
   },
   "links": [
     {
+      "label": "ช้อปที่ Thaimart",
+      "sub": "Thaimart shop",
+      "url": "https://app.thaimart.com/s/manastore-YqNTMI",
+      "icon": "bag",
+      "kind": "primary",
+      "visible": true,
+      "isNew": true
+    },
+    {
+      "label": "ช้อปที่ Nex Gen",
+      "sub": "Nex Gen Commerce shop",
+      "url": "https://nexgencommerce.one.th/linkShop/AQZXavoNlm-15788",
+      "icon": "bag",
+      "kind": "primary",
+      "visible": true,
+      "isNew": true
+    },
+    {
       "label": "ช้อปที่ Shopee",
       "sub": "Shopee shop",
       "url": "https://th.shp.ee/gMY2ax7Q",
@@ -64,24 +82,6 @@
       "icon": "drop",
       "kind": "secondary",
       "visible": false
-    },
-    {
-      "label": "ช้อปที่ Thaimart",
-      "sub": "Thaimart shop",
-      "url": "https://app.thaimart.com/s/manastore-YqNTMI",
-      "icon": "bag",
-      "kind": "primary",
-      "visible": true,
-      "isNew": true
-    },
-    {
-      "label": "ช้อปที่ Nex Gen",
-      "sub": "Nex Gen Commerce shop",
-      "url": "https://nexgencommerce.one.th/linkShop/AQZXavoNlm-15788",
-      "icon": "bag",
-      "kind": "primary",
-      "visible": true,
-      "isNew": true
     },
     {
       "label": "ติดต่อเรา / โทร",
