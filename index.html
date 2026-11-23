@@ -9,6 +9,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&family=Prompt:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Google Analytics 4: counts visits and button clicks on the live site only,
+    // so local tests and the Editor preview do not add to the numbers.
+    const GA_ID = 'G-F92222KFC5';
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    if (/\.github\.io$/i.test(location.hostname)) {
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    }
+  </script>
 </head>
 <body>
   <div id="page"></div>
@@ -25,6 +40,24 @@
       .catch(() => {
         document.getElementById('page').textContent = 'Cannot load config.json';
       });
+
+    // One "link_click" event per tap, named by the button, so reports read
+    // "ช้อปที่ Shopee" instead of a web address.
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a');
+      if (!a) return;
+      let label = '';
+      if (a.matches('.lp-link')) label = a.querySelector('.lp-label')?.textContent || '';
+      else if (a.matches('.lp-social')) label = a.getAttribute('aria-label') || '';
+      else if (a.matches('.lp-call')) label = 'โทร ' + (a.querySelector('.lp-call-name')?.textContent || a.href);
+      else if (a.matches('.lp-promo-cta')) label = 'โปรโมชัน';
+      else return;
+      gtag('event', 'link_click', {
+        link_label: label.trim(),
+        link_url: a.getAttribute('href'),
+        transport_type: 'beacon'
+      });
+    });
   </script>
 </body>
 </html>
