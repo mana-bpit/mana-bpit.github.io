@@ -45,21 +45,33 @@
     </div>
   </div>
   <script>
-    // Show the cookie bar until the visitor chooses; then save the choice and hide it
-    (() => {
-      const bar = document.getElementById('cookie-bar');
-      if (consent) return;
-      bar.hidden = false;
+    // Show the cookie bar until the visitor chooses; then save the choice and hide it.
+    // The "ตั้งค่าคุกกี้" link at the bottom of the page opens it again (see showCookieBar).
+    const cookieBar = document.getElementById('cookie-bar');
+    function showCookieBar() {
+      cookieBar.hidden = false;
       document.body.classList.add('has-cookie-bar');
-      bar.addEventListener('click', e => {
-        const choice = e.target.closest('[data-consent]')?.dataset.consent;
-        if (!choice) return;
-        try { localStorage.setItem(CONSENT_KEY, choice); } catch {}
-        gtag('consent', 'update', { analytics_storage: choice });
-        bar.hidden = true;
-        document.body.classList.remove('has-cookie-bar');
-      });
-    })();
+      cookieBar.querySelector('.cookie-yes').focus();
+    }
+    // Withdrawing consent also removes the Google Analytics cookies already saved
+    function deleteGaCookies() {
+      for (const c of document.cookie.split(';')) {
+        const name = c.split('=')[0].trim();
+        if (!name.startsWith('_ga')) continue;
+        for (const domain of ['', '; domain=' + location.hostname, '; domain=.' + location.hostname])
+          document.cookie = `${name}=; Max-Age=0; path=/${domain}`;
+      }
+    }
+    cookieBar.addEventListener('click', e => {
+      const choice = e.target.closest('[data-consent]')?.dataset.consent;
+      if (!choice) return;
+      try { localStorage.setItem(CONSENT_KEY, choice); } catch {}
+      gtag('consent', 'update', { analytics_storage: choice });
+      if (choice === 'denied') deleteGaCookies();
+      cookieBar.hidden = true;
+      document.body.classList.remove('has-cookie-bar');
+    });
+    if (!consent) showCookieBar();
   </script>
   <script src="render.js"></script>
   <script>
@@ -69,6 +81,13 @@
       .then(cfg => {
         const name = renderPage(cfg, document.getElementById('page'));
         if (name) document.title = name;
+        // Small "ตั้งค่าคุกกี้" link under the footer, so visitors can change their choice
+        const settings = document.createElement('button');
+        settings.type = 'button';
+        settings.className = 'cookie-settings';
+        settings.textContent = 'ตั้งค่าคุกกี้';
+        settings.addEventListener('click', showCookieBar);
+        document.querySelector('.lp-footer')?.after(settings);
         if (location.hash === '#contacts') document.querySelector('a[href="#contacts"]')?.click();
       })
       .catch(() => {

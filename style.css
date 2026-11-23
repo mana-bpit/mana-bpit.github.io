@@ -265,3 +265,15 @@ html, body { margin: 0; min-height: 100%; }
 .cookie-actions button:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
 /* Keep the footer visible above the bar */
 body.has-cookie-bar #page { padding-bottom: 140px; }
+/* "ตั้งค่าคุกกี้" link under the footer: opens the cookie bar again */
+.cookie-settings {
+  align-self: center;
+  margin-top: -14px;
+  padding: 8px 12px;
+  background: none; border: 0;
+  color: #5C5450;
+  font: inherit; font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.cookie-settings:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; border-radius: 6px; }
