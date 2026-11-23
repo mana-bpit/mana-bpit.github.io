@@ -234,3 +234,34 @@ html, body { margin: 0; min-height: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .lp-overlay, .lp-sheet { animation: none; }
 }
+
+/* Cookie bar (PDPA): fixed at the bottom until the visitor chooses.
+   It sits under the contact pop-up (z-index 10). */
+.cookie-bar {
+  position: fixed;
+  left: 50%; bottom: 0;
+  transform: translateX(-50%);
+  z-index: 9;
+  width: 100%; max-width: 480px;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+  background: #1A1A1A;
+  color: #FFFFFF;
+  font-family: 'Prompt', 'Kanit', sans-serif;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, .15);
+}
+.cookie-bar[hidden] { display: none; }
+.cookie-bar p { margin: 0 0 12px; font-size: 13px; line-height: 1.5; }
+.cookie-actions { display: flex; gap: 10px; }
+.cookie-actions button {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 10px;
+  font: inherit; font-size: 15px; font-weight: 500;
+  cursor: pointer;
+}
+.cookie-no { background: transparent; color: #FFFFFF; border: 1.5px solid #5C5450; }
+.cookie-yes { background: #FF7F17; color: #1A1A1A; border: 0; }
+.cookie-actions button:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
+/* Keep the footer visible above the bar */
+body.has-cookie-bar #page { padding-bottom: 140px; }

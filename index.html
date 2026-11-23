@@ -15,6 +15,16 @@
     const GA_ID = 'G-F92222KFC5';
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
+
+    // PDPA: no analytics cookies until the visitor accepts (Google Consent Mode).
+    // The choice is remembered in this browser: 'granted' or 'denied'.
+    const CONSENT_KEY = 'cookie-consent';
+    const consent = (() => { try { return localStorage.getItem(CONSENT_KEY); } catch { return null; } })();
+    gtag('consent', 'default', {
+      analytics_storage: consent === 'granted' ? 'granted' : 'denied',
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied'
+    });
+
     if (/\.github\.io$/i.test(location.hostname)) {
       const s = document.createElement('script');
       s.async = true;
@@ -27,6 +37,30 @@
 </head>
 <body>
   <div id="page"></div>
+  <div class="cookie-bar" id="cookie-bar" role="region" aria-label="การใช้คุกกี้" hidden>
+    <p>เว็บนี้ใช้คุกกี้ (Google Analytics) เพื่อนับจำนวนผู้เข้าชมและการกดปุ่ม ช่วยให้เราปรับปรุงบริการได้ดีขึ้น</p>
+    <div class="cookie-actions">
+      <button type="button" class="cookie-no" data-consent="denied">ไม่ยอมรับ</button>
+      <button type="button" class="cookie-yes" data-consent="granted">ยอมรับ</button>
+    </div>
+  </div>
+  <script>
+    // Show the cookie bar until the visitor chooses; then save the choice and hide it
+    (() => {
+      const bar = document.getElementById('cookie-bar');
+      if (consent) return;
+      bar.hidden = false;
+      document.body.classList.add('has-cookie-bar');
+      bar.addEventListener('click', e => {
+        const choice = e.target.closest('[data-consent]')?.dataset.consent;
+        if (!choice) return;
+        try { localStorage.setItem(CONSENT_KEY, choice); } catch {}
+        gtag('consent', 'update', { analytics_storage: choice });
+        bar.hidden = true;
+        document.body.classList.remove('has-cookie-bar');
+      });
+    })();
+  </script>
   <script src="render.js"></script>
   <script>
     // no-store so a new config.json shows at once after upload
